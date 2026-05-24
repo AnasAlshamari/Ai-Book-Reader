@@ -1,6 +1,3 @@
-<p align="center">
-  <img src="assets/banner.png" alt="Smart Book Reader Banner" width="100%" />
-</p>
 
 <h1 align="center">📚 Smart Book Reader</h1>
 
@@ -170,12 +167,7 @@ Contributions are welcome! Feel free to:
 
 ---
 
-## 📜 License
-
-This project is open-source and available under the [MIT License](LICENSE).
-
----
 
 <p align="center">
-  Made with ❤️ and AI
+  Made by Anas ALshammari
 </p>
