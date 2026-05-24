@@ -1,8 +1,10 @@
 
-<h1 align="center">📚 Smart Book Reader</h1>
+
+<h1 align="center">📚 Smart Book Reader | قارئ الكتب الذكي</h1>
 
 <p align="center">
-  <strong>AI-Powered Book Analysis — Upload a PDF and get instant insights</strong>
+  <strong>AI-Powered Book Analysis — Upload a PDF and get instant insights</strong><br>
+  <strong>تحليل ذكي للكتب — ارفع كتابك بصيغة PDF واحصل على تحليل فوري</strong>
 </p>
 
 <p align="center">
@@ -13,73 +15,79 @@
 </p>
 
 <p align="center">
-  <a href="#-features">Features</a> •
-  <a href="#-demo">Demo</a> •
-  <a href="#-quick-start">Quick Start</a> •
-  <a href="#-project-structure">Structure</a> •
-  <a href="#-tech-stack">Tech Stack</a> •
+  <b>🌐 <a href="https://ai-book-reader.streamlit.app/">Live Demo | تجربة حية</a></b>
 </p>
-
----
-
-## ✨ Features
-
-| Feature | Description |
-|---------|-------------|
-| 📄 **PDF Upload & Parsing** | Extract text from the first 30 pages of any PDF book using PyMuPDF |
-| 🖼️ **Cover Extraction** | Automatically renders the first page as a high-quality cover image |
-| 🧠 **AI-Powered Analysis** | Get a summary, main idea, genre, sub-genre, mood, themes, and age recommendation |
-| 🌍 **Bilingual Support** | Full Arabic (RTL) & English UI — the AI adapts its response language accordingly |
-| 📚 **Book Recommendations** | Cross-references AI-detected genre with local CSV datasets to suggest similar reads |
-| 🌓 **Dark / Light Theme** | Toggle between premium dark and light modes |
-| ⚡ **Cached Processing** | Results are cached so switching themes/languages doesn't re-run the AI |
-
----
-
-## 🎬 Demo
 
 <p align="center">
-  <em>Upload any PDF → get AI insights in seconds</em>
+  <a href="#-features">Features | الميزات</a> •
+  <a href="#-demo">Demo | العرض</a> •
+  <a href="#-quick-start">Quick Start | البدء السريع</a> •
+  <a href="#-project-structure">Structure | الهيكل</a> •
+  <a href="#-tech-stack">Tech Stack | التقنيات</a>
 </p>
-
-```
-1. Choose a PDF file
-2. Click "🔍 Analyze Book"
-3. View cover, summary, genre, themes & recommendations
-```
 
 ---
 
-## 🚀 Quick Start
+## ✨ Features | الميزات
 
-### Prerequisites
+| Feature | Description | الوصف |
+|---------|-------------|-------|
+| 📄 **PDF Upload** | Extract text from the first 30 pages of any PDF book | استخراج النص من أول 30 صفحة من أي كتاب بصيغة PDF |
+| 🖼️ **Cover Extraction** | Automatically renders the first page as a high-quality cover | استخراج صفحة الغلاف تلقائياً كصورة عالية الجودة |
+| 🧠 **AI Analysis** | Get summary, main idea, genre, mood, themes, and age range | احصل على ملخص، الفكرة الرئيسية، التصنيف، المزاج، والمواضيع |
+| 🌍 **Bilingual Support** | Full Arabic (RTL) & English UI — AI adapts accordingly | واجهة عربية وإنجليزية كاملة، والذكاء الاصطناعي يتكيف معها |
+| 📚 **Recommendations** | Matches AI genre with datasets to suggest similar reads | يطابق تصنيف الكتاب مع بيانات محلية لاقتراح كتب مشابهة |
+| 🌓 **Themes** | Toggle between premium dark and light modes | التبديل بين الوضعين الداكن والفاتح بتصميم عصري |
 
-- **Python 3.10+** installed on your machine
+---
 
-### Installation
+## 🎬 Demo | العرض السريع
+
+<p align="center">
+  <em>Upload any PDF → get AI insights in seconds</em><br>
+  <em>ارفع أي كتاب → احصل على رؤى ذكية في ثوانٍ</em>
+</p>
+
+```
+1. Choose a PDF file | اختر ملف الكتاب
+2. Click "🔍 Analyze Book" | اضغط "تحليل الكتاب"
+3. View insights & recommendations | تصفح التحليل والتوصيات
+```
+
+**Try it yourself:** [https://ai-book-reader.streamlit.app/](https://ai-book-reader.streamlit.app/)
+
+---
+
+## 🚀 Quick Start | البدء السريع
+
+### Prerequisites | المتطلبات
+
+- **Python 3.10+**
+
+### Installation | التثبيت
 
 ```bash
-# 1. Clone the repository
+# 1. Clone the repository | استنساخ المستودع
 git clone https://github.com/<your-username>/Smart-Book-Reader.git
 cd Smart-Book-Reader
 
-# 2. Create a virtual environment (recommended)
+# 2. Create a virtual environment | إنشاء بيئة افتراضية
 python -m venv venv
 source venv/bin/activate        # macOS / Linux
 venv\Scripts\activate           # Windows
 
-# 3. Install dependencies
+# 3. Install dependencies | تثبيت الحزم
 pip install -r requirements.txt
 
-# 4. Run the app
+# 4. Run the app | تشغيل التطبيق
 streamlit run app.py
 ```
 
-The app will open in your browser at **http://localhost:8501** 🎉
+The app will open at **http://localhost:8501** 🎉
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure | هيكل المشروع
 
 ```
 Smart-Book-Reader/
@@ -88,85 +96,28 @@ Smart-Book-Reader/
 ├── requirements.txt      # Python dependencies
 ├── assets/
 │   └── banner.png        # README banner image
-├── Datasets/
-│   ├── jamalon dataset.csv    # Arabic book dataset (~7 MB)
-│   ├── books.csv              # English book dataset (~1.5 MB)
-│   └── books_datasets.csv     # Supplementary Arabic dataset (~42 KB)
+├── Datasets/             # Local CSV datasets for recommendations
+│   ├── jamalon dataset.csv
+│   ├── books.csv
+│   └── books_datasets.csv
 ├── .gitignore
 └── README.md
 ```
 
 ---
 
-## 🧩 How It Works
-
-```mermaid
-graph LR
-    A["📄 Upload PDF"] --> B["📖 Extract Text"]
-    A --> C["🖼️ Extract Cover"]
-    B --> D["🧠 AI Analysis"]
-    D --> E["📊 Summary & Metadata"]
-    D --> F["📚 Dataset Matching"]
-    E --> G["🎨 Render Results"]
-    F --> G
-    C --> G
-```
-
-1. **PDF Processing** — PyMuPDF extracts text (first 30 pages) and renders the cover at 2× resolution.
-2. **AI Analysis** — Text is sent to an LLM (via g4f) with a structured JSON prompt, producing summary, genre, mood, themes, and age range.
-3. **Recommendations** — The detected category is matched against local CSV datasets (Jamalon for Arabic, Goodreads-style for English) to surface similar books.
-4. **Rendering** — Results are displayed in a premium glassmorphism UI with RTL support for Arabic.
-
----
-
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack | التقنيات المستخدمة
 
 | Layer | Technology |
 |-------|-----------|
-| **Frontend** | Streamlit + Custom CSS (glassmorphism, gradients, RTL) |
+| **Frontend** | Streamlit + Custom CSS (glassmorphism, RTL) |
 | **PDF Engine** | PyMuPDF (fitz) |
-| **AI Backend** | g4f (GPT-4 / GPT-3.5 fallback, no API key needed) |
+| **AI Backend** | g4f (GPT-4 / GPT-3.5 fallback, free API) |
 | **Data** | Pandas + local CSV datasets |
-| **Fonts** | Google Fonts — Inter, Playfair Display, Tajawal |
+| **Fonts** | Google Fonts (Inter, Playfair Display, Tajawal) |
 
 ---
-
-## 📝 Configuration
-
-### Language & Theme
-
-The sidebar provides runtime controls:
-- **🌐 Language** — Switch between العربية (Arabic) and English
-- **🌓 Dark Mode** — Toggle the dark/light theme
-
-### Swapping the AI Provider
-
-The AI logic lives in [`analyzer.py`](analyzer.py) → `analyze_with_llm()`. You can replace the `g4f` calls with any provider:
-
-```python
-# Example: OpenAI
-import openai
-response = openai.ChatCompletion.create(
-    model="gpt-4",
-    messages=[{"role": "user", "content": prompt}],
-)
-```
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feature/awesome`)
-3. Commit your changes (`git commit -m 'Add awesome feature'`)
-4. Push to the branch (`git push origin feature/awesome`)
-5. Open a Pull Request
-
----
-
 
 <p align="center">
-  Made by Anas ALshammari
+  Made by <a href="https://www.linkedin.com/in/anas-alshammari-795013369">Anas Alshammari</a>
 </p>
