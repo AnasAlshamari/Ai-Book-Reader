@@ -18,7 +18,6 @@
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-project-structure">Structure</a> •
   <a href="#-tech-stack">Tech Stack</a> •
-  <a href="#-license">License</a>
 </p>
 
 ---
