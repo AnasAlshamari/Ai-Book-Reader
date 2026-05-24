@@ -39,7 +39,7 @@ T = {
         "sidebar_theme": "🌓 الوضع الداكن",
     },
     "en": {
-        "page_title": "Smart Book Reader",
+        "page_title": "قارئ الكتب الذكي",
         "badge": "✨ Powered by AI",
         "hero_title": "Smart Book Reader",
         "hero_sub": "Upload a PDF book and get an instant AI-powered summary, genre analysis, age recommendation, and more.",
@@ -70,7 +70,7 @@ T = {
 # ╔══════════════════════════════════════════════════════════════════════════════╗
 # ║  PAGE CONFIG & SESSION STATE                                               ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
-st.set_page_config(page_title="Smart Book Reader", page_icon="📚", layout="wide")
+st.set_page_config(page_title="Smart Book Reader", page_icon="📚", layout="wide", initial_sidebar_state="expanded")
 
 if "lang" not in st.session_state:
     st.session_state.lang = "ar"
@@ -119,11 +119,24 @@ else:
 rtl_css = ""
 if lang == "ar":
     rtl_css = """
-    html, body, [data-testid="stAppViewContainer"], .stMarkdown,
-    .stTextInput, .stSelectbox, p, h1, h2, h3, h4, span, div, label {
+    /* RTL – scoped to content area to avoid sidebar animation glitches */
+    [data-testid="stAppViewContainer"] .block-container,
+    [data-testid="stAppViewContainer"] .stMarkdown,
+    [data-testid="stAppViewContainer"] .stTextInput,
+    [data-testid="stAppViewContainer"] .stSelectbox,
+    [data-testid="stAppViewContainer"] p,
+    [data-testid="stAppViewContainer"] h1,
+    [data-testid="stAppViewContainer"] h2,
+    [data-testid="stAppViewContainer"] h3,
+    [data-testid="stAppViewContainer"] h4,
+    [data-testid="stAppViewContainer"] label {
         direction: rtl !important; text-align: right !important;
     }
-    [data-testid="stSidebar"] * { direction: rtl !important; text-align: right !important; }
+    [data-testid="stSidebar"] [data-testid="stMarkdown"],
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] .stSelectbox {
+        direction: rtl !important; text-align: right !important;
+    }
     """
 
 st.markdown(f"""
@@ -136,12 +149,35 @@ html, body, [data-testid="stAppViewContainer"] {{
     color: {text_c};
 }}
 [data-testid="stAppViewContainer"] {{ background: {bg_grad}; min-height: 100vh; }}
-#MainMenu, footer, header {{ visibility: hidden; }}
-[data-testid="stToolbar"] {{ display: none; }}
+#MainMenu, footer {{ visibility: hidden; }}
+/* Sidebar – always visible and accessible */
+[data-testid="stSidebar"] {{
+    visibility: visible !important;
+    display: flex !important;
+    background: {bg} !important;
+}}
+[data-testid="stSidebarCollapsedControl"] {{
+    visibility: visible !important;
+    display: flex !important;
+}}
 {rtl_css}
 
+/* ── LAYOUT – remove default Streamlit top padding ──── */
+.block-container {{ padding-top: 1rem !important; }}
+[data-testid="stAppViewContainer"] > .main {{ padding-top: 0 !important; }}
+
+
 /* ── HERO ───────────────────────────────────────────── */
-.hero {{ text-align: center !important; padding: 40px 20px 20px; direction: ltr !important; }}
+.hero {{ 
+    text-align: center !important; 
+    padding: 48px 20px 24px; 
+    direction: rtl !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}}
+.hero * {{ text-align: center !important; direction: rtl !important; }}
 .hero-badge {{
     display: inline-block;
     background: linear-gradient(135deg,{accent}22,{accent2}22);
@@ -154,28 +190,42 @@ html, body, [data-testid="stAppViewContainer"] {{
     font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800;
     background: linear-gradient(135deg, {text_c} 0%, {accent} 50%, {accent2} 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    line-height: 1.2; margin-bottom: 12px;
+    background-clip: text;
+    line-height: 1.2; margin-bottom: 16px;
 }}
-.hero p {{ color: {sub_c}; font-size: 1rem; max-width: 560px; margin: 0 auto; line-height: 1.7; }}
+.hero p {{
+    color: #94a3b8; font-size: 1.05rem; max-width: 650px;
+    margin: 0 auto; line-height: 1.8; letter-spacing: 0.01em;
+}}
 
-/* ── GLASS CARD ─────────────────────────────────────── */
+/* ── GLASS CARD – premium micro-interactions ───────── */
 .glass-card {{
     background: {card_bg}; border: 1px solid {card_border};
     border-radius: 20px; padding: 28px; backdrop-filter: blur(16px);
     box-shadow: 0 4px 30px rgba(0,0,0,0.1); margin-bottom: 20px;
-    transition: box-shadow .3s, transform .2s;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }}
-.glass-card:hover {{ box-shadow: 0 8px 40px {accent}22; transform: translateY(-2px); }}
+.glass-card:hover {{
+    box-shadow: 0 12px 48px {accent}28;
+    transform: translateY(-3px);
+    border-color: {accent}33;
+}}
 
-/* ── COVER IMAGE ────────────────────────────────────── */
+/* ── COVER IMAGE – refined border & glow ───────────── */
 .cover-wrap {{
     background: {card_bg}; border: 1px solid {card_border};
     border-radius: 20px; padding: 16px; text-align: center;
     box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}}
+.cover-wrap:hover {{
+    box-shadow: 0 16px 56px rgba(0,0,0,0.25);
+    transform: translateY(-2px);
 }}
 .cover-wrap img {{
-    border-radius: 12px; max-height: 720px; width: auto;
+    border-radius: 16px; max-height: 720px; width: auto;
     box-shadow: 0 12px 48px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.06);
 }}
 
 /* ── INFO GRID ─────────────────────────────────────── */
@@ -183,9 +233,13 @@ html, body, [data-testid="stAppViewContainer"] {{
 .info-card {{
     background: {card_bg}; border: 1px solid {card_border};
     border-radius: 14px; padding: 18px 14px; text-align: center;
-    transition: transform .2s, box-shadow .2s;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }}
-.info-card:hover {{ transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }}
+.info-card:hover {{
+    transform: translateY(-4px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+    border-color: {accent}33;
+}}
 .info-icon {{ font-size: 1.8rem; margin-bottom: 6px; }}
 .info-label {{ font-size: .7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: {sub_c}; margin-bottom: 4px; }}
 .info-value {{ font-size: .95rem; font-weight: 700; color: {text_c}; }}
@@ -201,9 +255,14 @@ html, body, [data-testid="stAppViewContainer"] {{
 /* ── REC CARDS ─────────────────────────────────────── */
 .rec-card {{
     background: {card_bg}; border: 1px solid {card_border};
-    border-radius: 14px; padding: 18px; transition: all .2s;
+    border-radius: 14px; padding: 18px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }}
-.rec-card:hover {{ border-color: {accent}55; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }}
+.rec-card:hover {{
+    border-color: {accent}55;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+}}
 .rec-title {{ font-size: .9rem; font-weight: 700; color: {text_c}; margin-bottom: 4px; }}
 .rec-author {{ font-size: .8rem; color: {sub_c}; }}
 .rec-cat {{ font-size: .72rem; color: {accent}; font-weight: 600; margin-top: 6px; }}
@@ -222,21 +281,41 @@ html, body, [data-testid="stAppViewContainer"] {{
 }}
 .summary-text {{ font-size: 1rem; line-height: 1.8; color: {sub_c}; }}
 
-/* ── BUTTONS & UPLOADER ───────────────────────────── */
+/* ── BUTTONS – smooth premium hover ────────────────── */
 .stButton > button {{
     width: 100%;
     background: linear-gradient(135deg, {accent}, #4f46e5);
     color: #fff; border: none; border-radius: 14px;
     padding: 14px 28px; font-size: 1rem; font-weight: 700;
-    cursor: pointer; transition: all .3s;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
     box-shadow: 0 4px 20px {accent}44;
 }}
-.stButton > button:hover {{ transform: translateY(-2px); box-shadow: 0 8px 30px {accent}66; }}
-[data-testid="stFileUploader"] {{
-    background: {card_bg}; border: 2px dashed {accent}55;
-    border-radius: 14px; padding: 16px; transition: border-color .3s;
+.stButton > button:hover {{
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px {accent}66;
+    filter: brightness(1.08);
 }}
-[data-testid="stFileUploader"]:hover {{ border-color: {accent}; }}
+.stButton > button:active {{
+    transform: translateY(0px);
+    box-shadow: 0 2px 12px {accent}44;
+}}
+
+/* ── FILE UPLOADER – glassmorphic redesign ─────────── */
+[data-testid="stFileUploader"] {{
+    background: rgba(255, 255, 255, 0.02);
+    border: 2px dashed {accent}44;
+    border-radius: 16px; padding: 20px;
+    backdrop-filter: blur(12px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}}
+[data-testid="stFileUploader"]:hover {{
+    border-color: {accent}99;
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 4px 24px {accent}18;
+}}
+
+/* ── PROGRESS BAR ──────────────────────────────────── */
 .stProgress > div > div > div {{ background: linear-gradient(90deg,{accent},{accent2}) !important; }}
 </style>
 """, unsafe_allow_html=True)
@@ -371,3 +450,14 @@ if analyze_btn and uploaded:
 
 elif analyze_btn and not uploaded:
     st.warning(t["no_file_warn"])
+
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║  FOOTER                                                                    ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+st.markdown("""
+<div style="position: fixed; bottom: 0; left: 0; width: 100%; text-align: center; padding: 12px; background: rgba(10, 10, 15, 0.8); backdrop-filter: blur(8px); border-top: 1px solid rgba(255,255,255,0.05); z-index: 1000; font-size: 0.85rem;">
+    <a href="https://www.linkedin.com/in/anas-alshammari-795013369" target="_blank" style="color: #94a3b8; text-decoration: none; font-weight: 500; transition: color 0.3s;">
+        © Anas Alshammari 2026
+    </a>
+</div>
+""", unsafe_allow_html=True)
